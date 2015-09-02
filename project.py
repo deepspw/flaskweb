@@ -1,4 +1,4 @@
-from flask import Flask # Import the Flask class from class library
+from flask import Flask, render_template # Import the Flask class from class library
 app = Flask(__name__)  # Creates instant of the class using the name of the running application 
 
 from sqlalchemy import create_engine, and_, asc, desc, func
@@ -20,8 +20,8 @@ def restaurantsList():
     output = ''
     for e in session.query(Restaurant.name, Restaurant.id).group_by\
         (Restaurant.name).order_by(asc(Restaurant.name)):
-        restaurantName = str(e[1])
-        restaurantId = str(e[0])
+        restaurantName = str(e[0])
+        restaurantId = str(e[1])
         output += ("""
                 <ul><h3><a href="/restaurants/%s/">%s</h3>
                 <li><a href="/restaurants/%s/edit">Edit</a>
@@ -37,16 +37,7 @@ def restaurantMenu(restaurant_id):
         restaurant_id).one()
     items = session.query(MenuItem).filter_by(restaurant_id =
         restaurant_id)
-    output = ''
-    for i in items:
-        output += '<h3>'
-        output += i.name
-        output += '</h3>'
-        output += i.price
-        output += '</br>'
-        output += i.description
-        output += '</br>'
-    return output
+    return render_template('menu.html', restaurant=restaurant, items=items)
     
 @app.route('/restaurants/<int:restaurant_id>/add/')
 def newMenuItem(restaurant_id):
