@@ -1,4 +1,4 @@
-from flask import Flask, render_template # Import the Flask class from class library
+from flask import Flask, render_template, url_for # Import the Flask class from class library
 app = Flask(__name__)  # Creates instant of the class using the name of the running application 
 
 from sqlalchemy import create_engine, and_, asc, desc, func
