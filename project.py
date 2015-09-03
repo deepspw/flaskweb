@@ -17,18 +17,11 @@ def homepage():
 @app.route('/restaurants/')
 def restaurantsList():
     """Displays restaurants in DB"""
-    output = ''
-    for e in session.query(Restaurant.name, Restaurant.id).group_by\
-        (Restaurant.name).order_by(asc(Restaurant.name)):
-        restaurantName = str(e[0])
-        restaurantId = str(e[1])
-        output += ("""
-                <ul><h3><a href="/restaurants/%s/">%s</h3>
-                <li><a href="/restaurants/%s/edit">Edit</a>
-                <li><a href="/restaurants/%s/delete">Delete</a>
-                </ul>
-            """) % (restaurantId, restaurantName, restaurantId, restaurantId)
-    return output
+    restaurantName = session.query(Restaurant).all()
+    restaurantId = session.query(Restaurant).all()
+        
+    return render_template('restaurants.html', 
+        restaurantName=restaurantName, restaurantId=restaurantId)
 
 @app.route('/restaurants/<int:restaurant_id>/')   # In this case the HelloWorld
 def restaurantMenu(restaurant_id):
@@ -51,6 +44,9 @@ def editMenuItem(restaurant_id, menu_id):
 def deleteMenuItem(restaurant_id, menu_id):
     return "Page to delete a menu item. Task 3 complete!"
 
+@app.route('/restaurants/<int:restaurant_id>/add/')
+def newRestaurantItem(restaurant_id):
+    return "yay"
 if __name__ == '__main__':  # This is used only run the following if its being directly initiated and 
     app.debug = True        # not if the app was imported as a module but the rest of the content can
     app.run(host = '0.0.0.0', port = 5000)  # still be imported

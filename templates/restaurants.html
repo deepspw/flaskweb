@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Menu</title>
+    <title>Restaurants</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
@@ -21,26 +21,18 @@
   </head>
     <body>
 
-    <h1>{{restaurant.name}}</h1>
+    <h1>Restaurants</h1>
 
 
-    {% for i in items %}
+    {% for i in restaurantName %}
 
     <div>
 
-    <p>{{i.name}}</p>
+    <p><a href="{{ i.id }}">{{i.name}}</p>
+    <a href= "{{ url_for('newRestaurantItem',restaurant_id =
+        i.id) }}">New</a>
 
-    <p>{{i.description}}</p>
-
-    <p> {{i.price}} </p>
     
-    <a href="{{ url_for('newMenuItem', restaurant_id =
-        restaurant.id, menu_id=i.id) }}">New</a>
-    
-
-    <a href="{{ url_for('editMenuItem', restaurant_id =
-        restaurant.id, menu_id=i.id ) }}">Edit</a>
-    </div>
 
 
     {% endfor %}
@@ -50,3 +42,4 @@
     <script src="../../styles/js/bootstrap.min.js"></script>
   </body>
 </html>
+
