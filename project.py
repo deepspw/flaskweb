@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, redirect, request # Import the Flask class from class library
 app = Flask(__name__)  # Creates instant of the class using the name of the running application 
 
-from sqlalchemy import create_engine, and_, asc, desc, func
+from sqlalchemy import create_engine, and_, asc, desc, func, update
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Restaurant, MenuItem
 
@@ -48,23 +48,21 @@ def newMenuItem(restaurant_id):
 
 @app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/edit/', methods=['GET', 'POST'])        
 def editMenuItem(restaurant_id, menu_id): # not working yet
+    editedItem = session.query(MenuItem).filter_by(id = menu_id).one()
+    print editedItem
     if request.method == 'POST':
-        editItem = MenuItem(
-            name = request.form['name'],
-            description = request.form['description'],
-            price = request.form['price'],
-            id = menu_id,
-            restaurant_id = restaurant_id)
-        session.add(editItem)
+        editedItem.name = request.form['name']
+        editedItem.description = request.form['description']
+        editedItem.price = request.form['price']
+        editedItem.id = menu_id
+        editedItem.restaurant_id = restaurant_id
+        session.add(editedItem)
         session.commit()
         return redirect(url_for('restaurantMenu', restaurant_id=restaurant_id))
     else:
         return render_template('editmenuitem.html', restaurant_id=restaurant_id, menu_id=menu_id)
     
 
-# @app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/edit/')
-# def editMenuItem(restaurant_id, menu_id):
-    # return "page to edit a menu item. Task 2 complete!"
     
 @app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/delete/')
 def deleteMenuItem(restaurant_id, menu_id):
