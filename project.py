@@ -51,16 +51,17 @@ def editMenuItem(restaurant_id, menu_id): # not working yet
     editedItem = session.query(MenuItem).filter_by(id = menu_id).one()
     print editedItem
     if request.method == 'POST':
-        editedItem.name = request.form['name']
-        editedItem.description = request.form['description']
-        editedItem.price = request.form['price']
-        editedItem.id = menu_id
-        editedItem.restaurant_id = restaurant_id
-        session.add(editedItem)
-        session.commit()
+        if request.form['name'] or request.form['description'] or request.form['price']:
+            editedItem.name = request.form['name']
+            editedItem.description = request.form['description']
+            editedItem.price = request.form['price']
+            editedItem.id = menu_id
+            editedItem.restaurant_id = restaurant_id
+            session.add(editedItem)
+            session.commit()
         return redirect(url_for('restaurantMenu', restaurant_id=restaurant_id))
     else:
-        return render_template('editmenuitem.html', restaurant_id=restaurant_id, menu_id=menu_id)
+        return render_template('editmenuitem.html', restaurant_id=restaurant_id, menu_id=menu_id, i = editedItem)
     
 
     
