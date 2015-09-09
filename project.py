@@ -64,14 +64,17 @@ def editMenuItem(restaurant_id, menu_id): # not working yet
         return render_template('editmenuitem.html', restaurant_id=restaurant_id, menu_id=menu_id, i = editedItem)
     
 
-    
-@app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/delete/')
+@app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/delete/', methods=['GET', 'POST'])
 def deleteMenuItem(restaurant_id, menu_id):
-    return "Page to delete a menu item. Task 3 complete!"
+    if request.method == 'POST':
+        if request.form['delete'] == 'delete':
+            deleteItem = session.query(MenuItem).filter_by(id = menu_id).one()
+            session.delete(deleteItem)
+            session.commit()
+        return redirect(url_for('restaurantMenu', restaurant_id=restaurant_id))
+    else:
+        return render_template('deletemenuitem.html', restaurant_id=restaurant_id, menu_id=menu_id)
 
-@app.route('/restaurants/<int:restaurant_id>/add/')
-def newRestaurantItem(restaurant_id):
-    return "yay"
 if __name__ == '__main__':  # This is used only run the following if its being directly initiated and 
     app.debug = True        # not if the app was imported as a module but the rest of the content can
     app.run(host = '0.0.0.0', port = 5000)  # still be imported

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Restaurants</title>
+    <title>Menu</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
@@ -21,20 +21,25 @@
   </head>
     <body>
 
-    <h1>Restaurants</h1>
-
-
-    {% for i in restaurantName %}
+    <h1>Delete Menu Item</h1>
 
     <div>
 
-    <p><a href="{{ i.id }}">{{ i.name }}</p>
+    <form action="{{url_for( 'deleteMenuItem', restaurant_id=restaurant_id, menu_id=menu_id )}}" method = 'POST'>
 
-    {% endfor %}
+        <p>Delete:</p>
+        
+        <input type='text' size='30' name='delete' placeholder="type delete to confirm deletion">
+        
+        <input type='submit' value='Submit Changes'>
+        
+    </form>
+    </div>
+
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../../styles/js/bootstrap.min.js"></script>
   </body>
 </html>
-
