@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, request # Import the Flask class from class library
+from flask import Flask, render_template, url_for, redirect, request, flash # Import the Flask class from class library
 app = Flask(__name__)  # Creates instant of the class using the name of the running application 
 
 from sqlalchemy import create_engine, and_, asc, desc, func, update
@@ -42,6 +42,7 @@ def newMenuItem(restaurant_id):
             restaurant_id=restaurant_id)
         session.add(newItem)
         session.commit()
+        flash("New item created!")
         return redirect(url_for('restaurantMenu', restaurant_id=restaurant_id))
     else:
         return render_template('newmenuitem.html', restaurant_id=restaurant_id)
@@ -58,6 +59,7 @@ def editMenuItem(restaurant_id, menu_id): # not working yet
             editedItem.restaurant_id = restaurant_id
             session.add(editedItem)
             session.commit()
+            flash("Edited item")
         return redirect(url_for('restaurantMenu', restaurant_id=restaurant_id))
     else:
         return render_template('editmenuitem.html', restaurant_id=restaurant_id, menu_id=menu_id, i = editedItem)
@@ -70,11 +72,13 @@ def deleteMenuItem(restaurant_id, menu_id):
         if request.form['delete'] == 'delete':
             session.delete(deleteItem)
             session.commit()
+            flash("Item deleted")
         return redirect(url_for('restaurantMenu', restaurant_id=restaurant_id))
     else:
         return render_template('deletemenuitem.html', restaurant_id=restaurant_id, menu_id=menu_id, deleteItem = deleteItem)
 
 if __name__ == '__main__':  # This is used only run the following if its being directly initiated and 
+    app.secret_key = 'super_secret_key'
     app.debug = True        # not if the app was imported as a module but the rest of the content can
     app.run(host = '0.0.0.0', port = 5000)  # still be imported
     

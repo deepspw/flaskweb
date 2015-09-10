@@ -23,10 +23,25 @@
 
     <h1>{{restaurant.name}}</h1>
     <br>
+    
+    <!-- Start of message block -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    
+    <ul>
+    {% for message in messages %}
+        <li><strong>{{message}}</strong></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    <!-- End of message block -->
+    
     <a href="{{ url_for('newMenuItem', restaurant_id =
         restaurant.id) }}">Add item to menu</a>
     <br>
-
+    
+    <!-- Start restaurant list -->
 
     {% for i in items %}
 
@@ -45,10 +60,13 @@
     <a href="{{ url_for('deleteMenuItem', restaurant_id =
         restaurant.id, menu_id=i.id )}}">Delete</a>
     </div>
+    
     <br>
 
 
     {% endfor %}
+    
+    <!-- End restaurant list -->
     
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
