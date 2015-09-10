@@ -49,7 +49,6 @@ def newMenuItem(restaurant_id):
 @app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/edit/', methods=['GET', 'POST'])        
 def editMenuItem(restaurant_id, menu_id): # not working yet
     editedItem = session.query(MenuItem).filter_by(id = menu_id).one()
-    print editedItem
     if request.method == 'POST':
         if request.form['name'] or request.form['description'] or request.form['price']:
             editedItem.name = request.form['name']
@@ -66,14 +65,14 @@ def editMenuItem(restaurant_id, menu_id): # not working yet
 
 @app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/delete/', methods=['GET', 'POST'])
 def deleteMenuItem(restaurant_id, menu_id):
+    deleteItem = session.query(MenuItem).filter_by(id = menu_id).one()
     if request.method == 'POST':
         if request.form['delete'] == 'delete':
-            deleteItem = session.query(MenuItem).filter_by(id = menu_id).one()
             session.delete(deleteItem)
             session.commit()
         return redirect(url_for('restaurantMenu', restaurant_id=restaurant_id))
     else:
-        return render_template('deletemenuitem.html', restaurant_id=restaurant_id, menu_id=menu_id)
+        return render_template('deletemenuitem.html', restaurant_id=restaurant_id, menu_id=menu_id, deleteItem = deleteItem)
 
 if __name__ == '__main__':  # This is used only run the following if its being directly initiated and 
     app.debug = True        # not if the app was imported as a module but the rest of the content can
