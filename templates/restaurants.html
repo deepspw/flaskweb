@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='mystyles.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.min.css') }}">
+
     <title>Restaurants</title>
   </head>
     <body>
-    
+    <div class='myheader'>
+    </div>
+    <div class='mycontainer'>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     <ul>
@@ -17,18 +21,12 @@
     {% endwith %}
 
     <h1>Restaurants</h1>
-
-
+    <ul>
     {% for i in restaurantName %}
-
-    <div>
-
-    <p><a href="{{ i.id }}">{{ i.name }}</p>
-    
-    
-
+    <li><a href="{{ i.id }}">{{ i.name }}</a></li>
     {% endfor %}
-    
+    </ul>
+    </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
