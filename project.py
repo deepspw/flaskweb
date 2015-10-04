@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, request, flash # Import the Flask class from class library
+from flask import Flask, render_template, url_for, redirect, request, flash, jsonify # Import the Flask class from class library
 app = Flask(__name__)  # Creates instant of the class using the name of the running application 
 
 from sqlalchemy import create_engine, and_, asc, desc, func, update
@@ -9,6 +9,22 @@ engine = create_engine('sqlite:///restaurantmenu.db')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+# GET MENU "ITEM"
+@app.route('/restaurants/<int:restaurant_id>/<int:menu_id>/JSON')
+def restaurantItemJSON(restaurant_id, menu_id):
+    item = session.query(MenuItem).filter_by(id = menu_id)
+    return jsonify(MenuItems=[i.serialize for i in item])
+
+
+# API Endpoint (GET Request) GET MENU ITEMS
+@app.route('/restaurants/<int:restaurant_id>/JSON')
+def restaurantMenuJSON(restaurant_id):
+    restaurant = session.query(Restaurant).filter_by(\
+        id = restaurant_id).one()
+    items = session.query(MenuItem).filter_by(restaurant_id\
+        = restaurant_id).all()
+    return jsonify(MenuItems=[i.serialize for i in items])
 
 @app.route('/')        # @app decorators are used to enclose a function. Genrally the one following them
 def homepage():
