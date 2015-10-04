@@ -1,56 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- STYLING -->
+    <link href='https://fonts.googleapis.com/css?family=Noto+Serif' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='mystyles.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.min.css') }}">
-    <title>{{restaurant.name}} menu</title>
+
+    <title> {{restaurant.name}} menu</title>
+
   </head>
-    <body>
 
-    <h1>{{restaurant.name}}</h1>
-    <br>
-    
-    <!-- Start of message block -->
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    
-    <ul>
-    {% for message in messages %}
-        <li><strong>{{message}}</strong></li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    <!-- End of message block -->
-    
-    <a href="{{ url_for('newMenuItem', restaurant_id =
-        restaurant.id) }}">Add item to menu</a>
-    <br>
-    
-    <!-- Start restaurant list -->
-
-    {% for i in items %}
-
-    <div>
-    
-    <br>
-
-    <p>{{i.name}}</p>
-
-    <p>{{i.description}}</p>
-
-    <p> {{i.price}} </p>
-    
-    <a href="{{ url_for('editMenuItem', restaurant_id =
-        restaurant.id, menu_id=i.id ) }}">Edit</a>
-    <a href="{{ url_for('deleteMenuItem', restaurant_id =
-        restaurant.id, menu_id=i.id )}}">Delete</a>
-    </div>
-    
-    <br>
-
-
-    {% endfor %}
-    
+    <body style="font-family: 'Noto Serif', serif;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <h1 align="center">Food'Co</h1>
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-sm-0 col-xs-0"></div>
+                <div class="col-md-8 col-sm-12 col-xs-12">
+                    <h2><small>{{restaurant.name}}'s menu</small></h2>
+                    <!-- Message flashing -->
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <span class="label label-success">{{ message }}</span>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    <!-- End Message -->
+                </div>
+                <div class="col-md-2 col-sm-0 col-xs-0"></div>
+            </div>
+                <div class="row">
+                    <div class="col-md-2 col-sm-0 col-xs-0"></div>
+                    <div class ="col-md-8 col-sm-12 col-xs-12"style="font-size:12px;">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default">
+                            <a href="{{ url_for('newMenuItem', restaurant_id = restaurant.id) }}">Add item</a>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-0 col-xs-0"></div>
+                </br>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-sm-0 col-xs-0"></div>
+                    {% for i in items %}
+                    <div class="col-md-4 col-sm-4" style="font-size:14px;">
+                        <p><u>{{ i.name }}</u></p>
+                        <p>{{ i.description }}</p>
+                        <p>{{ i.price }}</p>
+                        <a href="{{ url_for('editMenuItem', restaurant_id =
+                        restaurant.id, menu_id=i.id ) }}">Edit</a>
+                        <a href="{{ url_for('deleteMenuItem', restaurant_id =
+                        restaurant.id, menu_id=i.id )}}">Delete</a>
+                    </div>
+                    <div class ="col-md-2 col-sm-0 col-xs-0"></div>
+                    {% endfor %}
+                </div>
     <!-- End restaurant list -->
     
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
