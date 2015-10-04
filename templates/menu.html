@@ -50,8 +50,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-2 col-sm-0 col-xs-0"></div>
-                    {% for i in items %}
-                    <div class="col-md-4 col-sm-4" style="font-size:14px;">
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+                    <div class="row"> <!-- Menu items listed -->
+                        {% for i in items %}
+                        <div class="col-md-4 col-sm-4" style="font-size:14px;">
                         <p><u>{{ i.name }}</u></p>
                         <p>{{ i.description }}</p>
                         <p>{{ i.price }}</p>
@@ -59,10 +61,13 @@
                         restaurant.id, menu_id=i.id ) }}">Edit</a>
                         <a href="{{ url_for('deleteMenuItem', restaurant_id =
                         restaurant.id, menu_id=i.id )}}">Delete</a>
+                        </div>
+                        {% endfor %}
+                    <div class="col-md-2 col-sm-0 col-xs-0"></div>
                     </div>
-                    <div class ="col-md-2 col-sm-0 col-xs-0"></div>
-                    {% endfor %}
+                    </div>
                 </div>
+            </div>
     <!-- End restaurant list -->
     
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

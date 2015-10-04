@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<!-- STYLING -->
+
+		<!-- FONTS -->
+		<link href='https://fonts.googleapis.com/css?family=Noto+Serif' rel='stylesheet' type='text/css'>
+		<!-- CUSTOM STYLING -->
+		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='mystyles.css') }}">
+		<!-- BOORSTRAP STYLING -->
+		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.min.css') }}">
+		<!-- TITLE -->
+		<title>{{ title }}</title>
+
+	</head>
+
+	<body style="font-family: 'Noto Serif', serif;">
+		<div class="container-fluid">
+			<!-- BRANDING -->
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-6">
+					<h1 align="center">Food'Co</h1>
+				</div>
+				<div class="col-md-3"></div>
+			</div>
+			<!-- SUBTITLE -->
+			<div class="row">
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				<div class="col-md-8 col-sm-12 col-xs-12">
+					<h2><small>{{ subtitle }}</small></h2>
+					<!-- MESSAGE FLASHING -->
+					{% with messages = get_flashed_messages() %}
+					{% if messages %}
+					{% for message in messages %}
+					<span class="label label-success">{{
+						message }}</span>
+					{% endfor %}
+					{% endif %}
+					{% endwith %}
+				</div>
+			</div>
+			<!-- MAIN CONTENT -->
+			<div class="row">
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+				<div class="col-md-8 col-sm-12 col-xs-12">
+					<!-- CONTENT GOES HERE -->
+				</div>
+				<div class="col-md-2 col-sm-0 col-xs-0"></div>
+			</div>
+
+		</div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+	</body>
+</html>

@@ -12,7 +12,11 @@ session = DBSession()
 
 @app.route('/')        # @app decorators are used to enclose a function. Genrally the one following them
 def homepage():
-    return "Homepage"
+    """Displays homepage"""
+    title = "Food'Co"
+    subtitle = "temp"
+    return render_template('index.html', 
+        title=title, subtitle=subtitle)
 
 @app.route('/restaurants/')
 def restaurantsList():
